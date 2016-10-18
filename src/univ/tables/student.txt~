@@ -1,0 +1,13 @@
+student
+id name grade
+int varchar float
+1 Faizan 5.5
+2 Shadab 8.7
+3 Ayush 8.9
+4 Babloo 7.8
+5 Deepak 7.6
+6 Manjhi 9.4
+7 Gaurav 9.5
+8 Ishank 9.9
+9 Kedia 8.9
+10 Ankit 9.3

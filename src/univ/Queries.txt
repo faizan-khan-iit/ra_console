@@ -1,0 +1,99 @@
+PRO{id:name}(student);
+PRO{id:name}(faculty);
+UNI(PRO{id:name}(student), PRO{id:name}(faculty));
+DIF(PRO{id:name}(student), PRO{id:name}(faculty));
+
+DIF(REN{faculty|fid}(PRO{id}(faculty)), PRO{fid}(course)); // Rename id to fid first for query
+
+DIF(PRO{id}(enrollment), PRO{id}(student)); // change enrollment-> id to 'int' for this to work
+REN{college_students}(student);
+REN{stud|stud_id:name:cgpa}(student);
+REN{student|stud_id:name:cgpa}(student);
+PRO{stud_id:name}(REN{stud|stud_id:name:cgpa}(student));
+CRP(student, faculty); // should throw error
+CRP(student,       REN{           fac|fid:fname:fdept:           fsalary}(                faculty));
+UNI(PRO{final.id:name}(REN{final|id:f_id:s_name:name}(PRO{id:fid:name:fname}(CRP(student, REN{fac|fid:fname:fdept:fsalary}(faculty))))), PRO{id:name}(student));
+CRP(course, DIF(PRO{id}(student), PRO{id}(enrollment)));
+CRP(course, PRO{id, name}(student));
+
+UNI(UNI(PRO{id}(student), PRO{id}(faculty)), PRO{id}(enrollment));
+UNI(UNI(PRO{id}(student), PRO{id}(faculty)), (PRO{id}(REN{crs|id}(PRO{id}(enrollment)))));
+UNI(UNI(PRO{name}(student), PRO{name}(faculty)), UNI(PRO{name}(dept), REN{course|name}(PRO{cid}(course)))); 
+
+SEL{((id < 30 & id/2 > 3 | name='Faizan') & (grade < 9.0))}(student);
+SEL{(grade < 9.0)}(student);
+SEL{name='Faizan'}(student);
+SEL{(id < 30 | name='Faizan') & (grade > 9.0)}(student);
+SEL{(id < 7 | name='Ankit') & (grade > 8.8)}(student);
+SEL{(id < 7 | name='Ankit') & (grade < 8.8)}(student);
+SEL{id < 7 & salary > 80000 | dept = 'CSE' & salary > 80000}(faculty);
+UNI(
+UNI(PRO{id:name}(SEL{salary>80000 & dept = 'CSE'}(faculty)),
+    PRO{id:name}(SEL{salary<50000 | dept = 'MNC'}(faculty))),
+UNI(PRO{id:name}(SEL{id < 7 & salary > 80000 | dept = 'CSE' & salary > 80000}(faculty)),
+    PRO{id:name}(SEL{(id < 7 | name='Ankit') & (grade < 8.8)}(student))));
+
+
+
+
+
+
+////////////////////////////////////////////////////////////
+///////// ERRORS ///////////////////////////////////////////
+////////////////////////////////////////////////////////////
+// Duplicate columns in project
+// Rename attributes same name
+// Check for valid data in tables
+
+
+; //EMPTY QUERY
+();
+[];
+{};
+
+SEL{id < 7 & salary > 80000 | dept = 'CSE' & salary > 80000.0}(faculty);
+SEL{((id < 30 & id/2 > 3 | name='Faizan') & (grade < 9))}(student);
+SEL{id < 30 + name}(faculty);
+SEL{id < 30.0}(faculty);
+SEL{id < '300'}(faculty);
+SEL{* + 1}(faculty);
+SEL{}(faculty); // NO ERROR HERE
+SEL{[]}(faculty);
+SEL{name='Messi' | id > 2 &}(faculty);
+SEL{name='Messi' |& id > 2}(faculty);
+SEL{|}(faculty);
+SEL{&}(faculty);
+SEL{{}}(faculty);
+SEL{[]}(faculty);
+SEL{()}(faculty);
+SEL{id < 10}();
+SEL{id | 10}();
+
+PRO{id:name}(REN{stud|stud_id:name:cgpa}(student));
+PRO{}(student);
+PRO{id:id}(student);
+PRO{id}({student});
+PRO(student){id};
+PRO{(id)}(student);
+PRO{id}();
+PRO{id}(SEL{grade> 11.0}(student));
+
+REN{student|id:id}(PRO{id:name}(student));
+REN{id,id}(PRO{id:name}(student));
+REN{id&()id}(PRO{id:name}(student));
+REN{id|id}(PRO{id:name}(student));
+REN{id}();
+REN{}(student);
+REN{emptyTable|asa}(PRO{id}(SEL{grade> 11.0}(student)));
+
+UNI( , student);
+UNI(student ,);
+UNI{student, student};
+UNI{, student};
+UNI{student ,};
+UNI[student , student];
+UNI[ , student];
+UNI[student ,];
+
+CRP(SEL{name = 'notpresent'}(student), course); // Empty set. No error.
+DIF(PRO{name}(SEL{name='notpresent'}(student)), PRO{name}(dept));

@@ -1,0 +1,8 @@
+dept
+name building budget
+varchar varchar int
+CSE LT1 100000
+EEE LT2 120000
+ECE LT3 90000
+MEC LT3 70000
+CHE LT4 98000

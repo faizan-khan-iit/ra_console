@@ -1,0 +1,56 @@
+SELECT:
+
+SEL{*}(student);
+SEL{name='Albert'}(student);
+SEL{name='Albert' & grade > 6.0}(student);
+SEL{grade < 4.0}(student);
+SEL{(name = 'Albert' | id < 10) & grade > 8.0}(student);
+SEL{(faculty.dept = 'MNC') | salary > 80000}(faculty);
+
+PROJECT:
+
+PRO{*}(dept);
+PRO{name:salary}(faculty);
+
+RENAME:
+
+REN{student|stud_id:name:cgpa}(student);
+REN{department}(dept);
+
+UNION:
+
+UNI(SEL{name='Albert'}(student), SEL{grade > 6.0}(student));
+
+SET DIFFERENCE:
+
+DIF(SEL{name='Albert'}(student), SEL{grade > 6.0}(student));
+
+CARTESIAN PRODUCT:
+
+CRP(faculty, course);
+
+MORE QUERIES:
+
+// Which faculty teaches which course
+PRO{id:name:cid}(SEL{fid = id}(CRP(faculty, course)));
+
+// All faculty members with salary > 70000 and their courses
+PRO{id:name:dept:cid:salary}(SEL{fid = id & salary > 70000}(CRP(faculty, course)));
+
+// highest salary in faculty
+DIF(PRO{id:salary}(faculty),
+    PRO{id:salary}(SEL{salary < fsal}(CRP(faculty, REN{fac|fid:fname:fdept:fsal}(faculty)))));
+
+// Find which course the teachers of CSE dept teach
+PRO{id:name:cid:strength}(SEL{dept='CSE'}(SEL{fid = id}(CRP(faculty, course))));
+
+// SET INTERSECTION
+// Teachers in CSE dept AND with salary < 90000
+DIF(SEL{salary < 90000}(faculty),
+    DIF(SEL{salary < 90000}(faculty),
+	SEL{dept = 'CSE'}(faculty)));
+
+// Natural Join
+REN{stud_info|stud_id:stud_name:grade:course_id}(PRO{id:name:grade:cid}(SEL{eid = id}(CRP(student, REN{enroll|eid:cid}(enrollment)))));
+
+

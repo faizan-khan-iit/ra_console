@@ -1,0 +1,10 @@
+## database ##
+
+University Database
+
+// Tables //
+$student
+$dept
+$faculty
+$course
+$enrollment

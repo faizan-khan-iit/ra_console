@@ -1,0 +1,23 @@
+student
+id name grade
+int varchar float
+1 Faizan 5.5
+2 Rem 8.7
+3 Ayush 8.9
+4 Babloo 7.8
+5 Deepak 7.6
+6 Manjhi 9.4
+7 Gaurav 9.5
+8 Ishank 9.9
+9 Kedia 8.9
+10 Ankit 9.3
+11 Graham 6.7
+12 Albert 4.6
+13 Bohr 7.8
+14 Neil 6.7
+15 Collins 6.5
+16 Red 8.7
+17 Graham 5.7
+18 Albert 8.7
+19 Sebastian 9.4
+20 Light 9.6
