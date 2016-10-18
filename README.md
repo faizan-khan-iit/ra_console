@@ -170,7 +170,7 @@ NOTES:
 5. CRP(student, course);
 6. REN{stud|stud_id:name:cgpa}(student);
 ```
-For more queries, see **Query** file
+For more queries, see [Query file](https://github.com/faizan-khan-iit/ra_console/blob/master/Queries/queries.pdf)
 
 --------
 
