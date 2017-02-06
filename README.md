@@ -67,7 +67,7 @@ SEL{predicate}(table_name);
 
 PROJECT:
 ```{}
-PROJECT{column_name1:column_name2}(table_name);
+PRO{column_name1:column_name2}(table_name);
 ```
 
 RENAME:
